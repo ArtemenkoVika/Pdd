@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Обучение ПДД UA</string>
+    <string name="registration">"  Регистрация  "</string>
+    <string name="registration2">"  Зарегистрироваться  "</string>
+    <string name="reading">"   Чтение ПДД   "</string>
+    <string name="sign">"   Знаки ПДД     "</string>
+    <string name="tests">"   Тесты ПДД      "</string>
+    <string name="results">"  Результаты тестов  "</string>
+    <string name="source">"      Информация взята с сайта \"GAI.UA - Обучение правилам дорожного движения России и Украины\""</string>
+    <string name="construction">В разработке.</string>
+    <string name="back_to_main">Главное меню</string>
+    <string name="title_activity_sign">Знаки ПДД</string>
+    <string name="title_activity_reading">Чтение ПДД</string>
+    <string name="title_activity_results">Результаты тестов</string>
+    <string name="title_activity_tests_of_pdd">Тесты ПДД</string>
+    <string name="title_activity_registration">Регистрация</string>
+    <string name="registration_change">"  Сменить пользователя  "</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="edit_preferences">"  Введите ИМЯ  "</string>
+    <string name="text_info">Если, Вы есть в списке зарегистрировавшихся пользователей просто выберите свое имя.</string>
+    <string name="text_dialog_registration">Нужно ввести ИМЯ!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="next">Следующий</string>
+    <string name="previous">Предыдущий</string>
+    <string name="answer">Ответить</string>
+    <string name="true_answer">Правильные ответы:</string>
+    <string name="false_answer">Неправильные ответы:</string>
+    <string name="dialog_info_must_registration">Сначала нужно зарегистрироваться!</string>
+    <string name="dialog_info_not_all_question">Вы ответили не на все вопросы!</string>
+
+</resources>

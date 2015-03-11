@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_activity_results"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/stars"
+    tools:context="com.example.admin.pdd.activity.ResultsActivity">
+
+    <fragment
+        android:id="@+id/fragment_results"
+        class="com.example.admin.pdd.fragment.ResultsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_results"></fragment>
+
+</LinearLayout>

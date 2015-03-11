@@ -1,0 +1,14 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+    </style>
+
+    <style name="TextStyle" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:gravity">left</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+</resources>

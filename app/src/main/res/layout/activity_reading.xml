@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_activity_reading"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.admin.pdd.activity.ReadingActivity">
+
+    <fragment
+        android:id="@+id/fragment_reading"
+        class="com.example.admin.pdd.fragment.ReadingFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_reading"></fragment>
+
+</LinearLayout>

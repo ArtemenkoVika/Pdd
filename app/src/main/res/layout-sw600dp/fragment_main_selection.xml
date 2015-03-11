@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/liner_selection"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green_light_color"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.example.admin.pdd.fragment.MainSelectionFragment">
+
+    <TextView
+        android:id="@+id/text_hello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/button_registration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/button_of_registration"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/registration"
+        android:textColor="@drawable/button_selector" />
+
+    <Button
+        android:id="@+id/button_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_dark"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="@string/sign"
+        android:textColor="@drawable/button_selector_white" />
+
+    <Button
+        android:id="@+id/button_reading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/yellow_color"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="@string/reading"
+        android:textColor="@drawable/button_selector" />
+
+    <Button
+        android:id="@+id/button_tests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_dark"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="@string/tests"
+        android:textColor="@drawable/button_selector" />
+
+    <Button
+        android:id="@+id/button_results"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_of_result"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="@string/results"
+        android:textColor="@drawable/button_selector_white" />
+
+    <TextView
+        android:id="@+id/button_source"
+        style="@style/TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:text="@string/source" />
+</LinearLayout>

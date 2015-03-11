@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.admin.pdd.activity.BaseActivity" >
+
+    <item
+        android:id="@+id/back_to_main"
+        android:showAsAction="always"
+        android:title="@string/back_to_main" />
+
+</menu>

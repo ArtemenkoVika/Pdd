@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_activity_tests_of_pdd"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.admin.pdd.activity.TestsOfPDDActivity">
+
+    <fragment
+        android:id="@+id/fragment_tests_of_pdd"
+        class="com.example.admin.pdd.fragment.TestsOfPDDFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_tests_of_pdd"></fragment>
+
+    <fragment
+        android:id="@+id/fragment_tests_of_pdd_part_two"
+        class="com.example.admin.pdd.fragment.TestsOfPDDFragmentPartTwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        tools:layout="@layout/fragment_tests_of_pdd_part_two"></fragment>
+
+</LinearLayout>

@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_main_selection"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MainSelectionActivity">
+
+    <fragment
+        android:id="@+id/fragment_main_selection"
+        class="com.example.admin.pdd.fragment.MainSelectionFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_main_selection"></fragment>
+
+</LinearLayout>

@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_activity_registration"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lilac_color"
+    android:orientation="vertical"
+    tools:context="com.example.admin.pdd.activity.RegistrationActivity">
+
+    <fragment
+        android:id="@+id/fragment_registration"
+        class="com.example.admin.pdd.fragment.RegistrationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_registration"></fragment>
+
+</LinearLayout>
