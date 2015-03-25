@@ -7,15 +7,19 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.admin.pdd.R;
+import com.example.admin.pdd.entity.Question;
+import com.example.admin.pdd.entity.Tests;
 import com.example.admin.pdd.entity.User;
 import com.example.admin.pdd.fragment.MainSelectionFragment;
-import com.example.admin.pdd.java_classes.ConnectWithDatabase;
-import com.example.admin.pdd.patterns.Singleton;
+import com.example.admin.pdd.module.ConnectWithDatabase;
+import com.example.admin.pdd.pattern.Singleton;
 
 public class MainSelectionActivity extends FragmentActivity {
     private MainSelectionFragment selectionFragment;
     private Singleton singleton = Singleton.getInstance();
     private User user = User.getInstance();
+    private Tests tests = Tests.getInstance();
+    private Question question = Question.getInstance();
     private Button buttonRegistration;
     private TextView textHello;
 
@@ -34,9 +38,18 @@ public class MainSelectionActivity extends FragmentActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (singleton.getIdQuestions() != null) singleton.setIdQuestions(null);
-        if (singleton.getAnswersMap() != null) singleton.setAnswersMap(null);
-        if (singleton.getAnswerOrSkip() != null) singleton.setAnswerOrSkip(null);
+        singleton.setEnd(false);
+        singleton.setTimerRotation(false);
+        tests.setIdQuestions(null);
+        tests.setIdQuestionAndAnswersButtonsInOrder(null);
+        tests.setIdQuestionAndOneAnswer(null);
+        tests.setAnswerNotSkipInOrder(null);
+        user.setTrueAnswers(null);
+        user.setFalseAnswers(null);
+        question.setIdPressedButton(0);
+        question.setAnswers(null);
+        question.setNumberOfButtonAnswer(null);
+        singleton.count = 0;
         if (!user.getLoginUserName().equals("")) {
             textHello.setText("Привет, " + user.getLoginUserName());
             textHello.setVisibility(View.VISIBLE);

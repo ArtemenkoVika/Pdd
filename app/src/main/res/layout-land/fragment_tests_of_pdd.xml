@@ -22,7 +22,7 @@
             android:layout_weight="0"
             android:background="@drawable/text_view_timer"
             android:padding="10dp"
-            android:text="20:14"/>
+            android:text="@string/timer_time" />
 
         <ImageView
             android:id="@+id/image_question"

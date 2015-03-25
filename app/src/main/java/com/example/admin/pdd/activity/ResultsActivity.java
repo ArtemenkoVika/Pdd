@@ -2,6 +2,7 @@ package com.example.admin.pdd.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.admin.pdd.R;
@@ -12,6 +13,7 @@ public class ResultsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+        singleton.setEnd(true);
     }
 
     @Override
@@ -25,6 +27,12 @@ public class ResultsActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.results, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
@@ -32,6 +40,10 @@ public class ResultsActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setClass(this, MainSelectionActivity.class);
                 startActivity(intent);
+                return true;
+
+            case R.id.tests_again:
+
                 return true;
 
             default:

@@ -2,7 +2,6 @@ package com.example.admin.pdd.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,44 +12,43 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.pdd.R;
-import com.example.admin.pdd.activity.ResultsActivity;
-import com.example.admin.pdd.java_classes.DataBasePdd;
+import com.example.admin.pdd.entity.Question;
+import com.example.admin.pdd.entity.Tests;
+import com.example.admin.pdd.module.DataBasePdd;
+import com.example.admin.pdd.module.TestsSystem;
+import com.example.admin.pdd.module.TimerModule;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.Random;
 
 public class TestsOfPDDFragment extends BaseFragment implements View.OnClickListener {
+    public final static int QUANTITY_OF_QUESTIONS = 20;  //not more 200
+    public final static int QUANTITY_OF_ALL_QUESTIONS = 200;
     private ImageView imageQuestion;
     private TextView textQuestion;
-    private TextView textTimer;
+    private TextView textViewTimer;
     private Button buttonAnswerOne;
     private Button buttonAnswerTwo;
     private Button buttonAnswerThree;
     private Button buttonAnswerFour;
-    private DataBasePdd dataBasePdd;
-    private ArrayList<String> answers;
-    private ArrayList<Integer> idQuestionsArrayList;
-    private ArrayList<Integer> numberOfButtonAnswer;
-    private ArrayList<String> setButtonAnswers;
+    private DataBasePdd dataBasePdd = new DataBasePdd();
+    private Question question = Question.getInstance();
+    private Tests tests = Tests.getInstance();
+    private HashSet<Integer> idQuestions = new HashSet();
+    private TimerModule timerModule;
     private ClickSomeButtonListener clickSomeButton;
-    private int quantityOfAnswers = 5;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
+    private View view;
+    private TestsSystem testsSystem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tests_of_pdd, container, false);
+        view = inflater.inflate(R.layout.fragment_tests_of_pdd, container, false);
 
         imageQuestion = (ImageView) view.findViewById(R.id.image_question);
         textQuestion = (TextView) view.findViewById(R.id.text_question);
-        textTimer = (TextView) view.findViewById(R.id.text_timer);
+        textViewTimer = (TextView) view.findViewById(R.id.text_timer);
         buttonAnswerOne = (Button) view.findViewById(R.id.button_answer_one);
         buttonAnswerTwo = (Button) view.findViewById(R.id.button_answer_two);
         buttonAnswerThree = (Button) view.findViewById(R.id.button_answer_three);
@@ -66,79 +64,58 @@ public class TestsOfPDDFragment extends BaseFragment implements View.OnClickList
         buttonAnswerThree.setTag(2);
         buttonAnswerFour.setTag(3);
 
-        dataBasePdd = new DataBasePdd();
-        dialogMessage = getActivity().getResources().getString(R.string.dialog_info_not_all_question);
-
-        if (singleton.getIdQuestions() == null) {
-            singleton.setIdQuestions(new HashSet());
-            singleton.setAnswersMap(new LinkedHashMap());
-            singleton.setAnswersArrayList(new ArrayList());
-            singleton.setAnswerOrSkip(new LinkedHashMap());
-            while (singleton.getIdQuestions().size() < quantityOfAnswers) {
-                singleton.getIdQuestions().add(dataBasePdd.setQuestion(getActivity(), textQuestion,
+        if (tests.getIdQuestions() == null) {
+            tests.setIdQuestions(new ArrayList());
+            tests.setIdQuestionAndOneAnswer(new LinkedHashMap());
+            tests.setAnswerNotSkipInOrder(new ArrayList());
+            tests.setIdQuestionAndAnswersButtonsInOrder(new LinkedHashMap());
+            singleton.setAnswersForOneQuestionOrder(new ArrayList());
+            question.setNumberOfButtonAnswer(new ArrayList());
+            while (idQuestions.size() < QUANTITY_OF_QUESTIONS) {
+                idQuestions.add(dataBasePdd.setQuestion(getActivity(), textQuestion,
                         imageQuestion, 0, false));
             }
+            tests.getIdQuestions().addAll(idQuestions);
         }
-        numberOfButtonAnswer = new ArrayList();
-        idQuestionsArrayList = new ArrayList();
-        idQuestionsArrayList.addAll(singleton.getIdQuestions());
-        setOfTestsSystem(idQuestionsArrayList.get(0));
+        if (!singleton.isEnd()) timerModule = new TimerModule(getActivity(), textViewTimer);
+        testsSystem = new TestsSystem(clickSomeButton, getActivity(), buttonAnswerOne,
+                buttonAnswerTwo, buttonAnswerThree, buttonAnswerFour, imageQuestion, textQuestion,
+                timerModule);
+
+        testsSystem.setOfTestsSystem(tests.getIdQuestions().get(0));
+        System.out.println(tests.getIdQuestions());
         return view;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View view) {
-        if (singleton.getAnswerOrSkip().containsKey(idQuestionsArrayList.get(singleton.count))) {
-            clickSomeButton.clickOnSomeOfButtonsAnswer(false);
-        } else clickSomeButton.clickOnSomeOfButtonsAnswer(true);
+        if (tests.getIdQuestionAndOneAnswer().containsKey(tests.getIdQuestions().get(singleton.count))) {
+            clickSomeButton.buttonAnswerEnabled(false);
+        } else clickSomeButton.buttonAnswerEnabled(true);
         Button button = (Button) view.findViewById(view.getId());
-        singleton.setTextAnswer(button.getText().toString());
-        setBackgroundButton(buttonAnswerOne);
-        setBackgroundButton(buttonAnswerTwo);
-        setBackgroundButton(buttonAnswerThree);
-        setBackgroundButton(buttonAnswerFour);
+
+        question.setTextAnswer(button.getText().toString());
+        question.setIdPressedButton(view.getId());
+
+        testsSystem.setDefaultBackgroundButtonsAnswer();
         button.setBackground(getResources().getDrawable(R.drawable.button_of_answer_pressed));
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void setBackgroundButton(Button button) {
-        button.setBackground(getResources().getDrawable(R.drawable.button_of_answer));
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        checkOfSelection();
-    }
-
     public void orPreviousOrAnswerOrNext(int idOfButton) {
         switch (idOfButton) {
 
             case R.id.button_previous:
-                setBackgroundButton(buttonAnswerOne);
-                setBackgroundButton(buttonAnswerTwo);
-                setBackgroundButton(buttonAnswerThree);
-                setBackgroundButton(buttonAnswerFour);
-                singleton.count--;
-                if (singleton.count == -1) {
-                    singleton.count++;
-                    return;
-                }
-                clickSomeButton.clickOnSomeOfButtonsAnswer(false);
-                setOfTestsSystem(idQuestionsArrayList.get(singleton.count));
-                checkOfSelection();
+                testsSystem.buttonPrevious();
                 break;
 
             case R.id.button_answer:
-                singleton.getAnswerOrSkip().put(idQuestionsArrayList.get(singleton.count),
-                        singleton.getTextAnswer());
-                nextQuestion();
+                testsSystem.buttonAnswer();
                 break;
 
             case R.id.button_next:
-                checkOfSelection();
-                nextQuestion();
+                testsSystem.buttonNext();
                 break;
 
             default:
@@ -146,108 +123,12 @@ public class TestsOfPDDFragment extends BaseFragment implements View.OnClickList
         }
     }
 
-    public void checkOfSelection(){
-        if (singleton.getAnswerOrSkip().containsKey(idQuestionsArrayList.get(singleton.count))) {
-            String textOfButton = singleton.getAnswerOrSkip().get(idQuestionsArrayList.
-                    get(singleton.count));
-            buttonEqualsWithTrueAnswer(buttonAnswerOne, textOfButton);
-            buttonEqualsWithTrueAnswer(buttonAnswerTwo, textOfButton);
-            buttonEqualsWithTrueAnswer(buttonAnswerThree, textOfButton);
-            buttonEqualsWithTrueAnswer(buttonAnswerFour, textOfButton);
-        } else clickSomeButton.clickOnSomeOfButtonsAnswer(true);
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void buttonEqualsWithTrueAnswer(Button button, String textOfButton){
-        if (button.getText().equals(textOfButton)) button.setBackground(getResources().
-                getDrawable(R.drawable.button_of_answer_pressed));
-    }
-
-    public void setButtonAnswer(Button button, int idQuestion) {
-        Random random = new Random();
-        int numberOfButton = random.nextInt(answers.size());
-        for (int i = 0; i < answers.size(); i++) {
-            if (button.getTag().equals(i)) {
-                while (true) {
-                    if (numberOfButtonAnswer.contains(numberOfButton))
-                        numberOfButton = random.nextInt(answers.size());
-                    else break;
-                }
-                singleton.getAnswersArrayList().add(answers.get(numberOfButton));
-                button.setText(answers.get(numberOfButton));
-                numberOfButtonAnswer.add(numberOfButton);
-            }
-        }
-        singleton.getAnswersMap().put(idQuestion, singleton.getAnswersArrayList());
-    }
-
-    public void setOfTestsSystem(int idQuestion) {
-        dataBasePdd.setQuestion(getActivity(), textQuestion, imageQuestion, idQuestion, true);
-        answers = dataBasePdd.setAnswers(getActivity(), idQuestion);
-
-        buttonAnswerOne.setText("answer");
-        buttonAnswerTwo.setText("answer");
-        buttonAnswerThree.setText("answer");
-        buttonAnswerFour.setText("answer");
-        try {
-            setButtonAnswers = singleton.getAnswersMap().get(idQuestion);
-        } catch (Exception e) {
-        }
-        if (!singleton.getAnswersMap().isEmpty() && setButtonAnswers != null) {
-            try {
-                buttonAnswerOne.setText(setButtonAnswers.get(0));
-                buttonAnswerTwo.setText(setButtonAnswers.get(1));
-                buttonAnswerThree.setText(setButtonAnswers.get(2));
-                buttonAnswerFour.setText(setButtonAnswers.get(3));
-            } catch (Exception e) {
-            }
-        } else {
-            setButtonAnswer(buttonAnswerOne, idQuestion);
-            setButtonAnswer(buttonAnswerTwo, idQuestion);
-            setButtonAnswer(buttonAnswerThree, idQuestion);
-            setButtonAnswer(buttonAnswerFour, idQuestion);
-
-            numberOfButtonAnswer.clear();
-            singleton.setAnswersArrayList(new ArrayList());
-
-        }
-        setButtonVisibility(buttonAnswerOne);
-        setButtonVisibility(buttonAnswerTwo);
-        setButtonVisibility(buttonAnswerThree);
-        setButtonVisibility(buttonAnswerFour);
-    }
-
-    public void setButtonVisibility(Button button) {
-        if (button.getText().equals("answer")) button.setVisibility(View.GONE);
-        else button.setVisibility(View.VISIBLE);
-    }
-
-    public void nextQuestion() {
-        setBackgroundButton(buttonAnswerOne);
-        setBackgroundButton(buttonAnswerTwo);
-        setBackgroundButton(buttonAnswerThree);
-        setBackgroundButton(buttonAnswerFour);
-        singleton.count++;
-        if (singleton.count == quantityOfAnswers && singleton.getAnswerOrSkip().size() ==
-                quantityOfAnswers) {
-            singleton.count = 0;
-            Intent intent = new Intent();
-            intent.setClass(getActivity(), ResultsActivity.class);
-            getActivity().startActivity(intent);
-            return;
-        }
-        if (singleton.count == quantityOfAnswers && singleton.getAnswerOrSkip().size() !=
-                quantityOfAnswers) {
-            showDialogInfo(dialogTitle, dialogMessage);
-            singleton.count--;
-            return;
-        }
-        clickSomeButton.clickOnSomeOfButtonsAnswer(false);
-        setOfTestsSystem(idQuestionsArrayList.get(singleton.count));
-    }
-
     public interface ClickSomeButtonListener {
-        public void clickOnSomeOfButtonsAnswer(Boolean enableButtonAnswer);
+        public void buttonAnswerEnabled(boolean enableButtonAnswer);
+
+        public void buttonPreviousVisibility(int visibilityButtonPrevious);
+
+        public void buttonNextVisibility(int visibilityButtonNext);
     }
 
     @Override
@@ -259,6 +140,24 @@ public class TestsOfPDDFragment extends BaseFragment implements View.OnClickList
             throw new ClassCastException(activity.toString()
                     + " must implement ClickSomeButtonListener");
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    public void onResume() {
+        super.onResume();
+        testsSystem.checkOfSelection();
+        if (question.getIdPressedButton() != 0) {
+            Button button = (Button) view.findViewById(question.getIdPressedButton());
+            button.setBackground(getResources().getDrawable(R.drawable.button_of_answer_pressed));
+            question.setIdPressedButton(0);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (timerModule.getTimer() != null) timerModule.getTimer().cancel();
     }
 
     @Override

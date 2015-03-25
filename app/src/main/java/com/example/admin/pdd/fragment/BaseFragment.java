@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 
 import com.example.admin.pdd.entity.User;
-import com.example.admin.pdd.patterns.Singleton;
+import com.example.admin.pdd.pattern.Singleton;
 
 public class BaseFragment extends Fragment implements DialogInterface.OnClickListener {
     protected Singleton singleton = Singleton.getInstance();

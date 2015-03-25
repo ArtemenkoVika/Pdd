@@ -10,7 +10,10 @@ import java.util.ArrayList;
 public interface IDataBasePdd {
     public int setQuestion(Context context, TextView textQuestion, ImageView imageQuestion,
                            int idQuestionAlreadyExist, boolean isAlreadyExist);
+
     public Drawable loadImageFromAsset(int index, Context context);
-    public ArrayList<String> setAnswers(Context context, int idQuestion);
+
+    public ArrayList<String> getAnswers(Context context, int idQuestion);
+
     public String getTrueAnswer(Context context, int idQuestion);
 }

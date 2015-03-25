@@ -72,8 +72,10 @@ public class RegistrationFragment extends BaseFragment implements View.OnClickLi
         switch (v.getId()) {
 
             case R.id.button_registration2:
-                if (editText.getText().toString().equals(""))
+                if (editText.getText().toString().equals("")) {
+                    if (dialogInfo != null && dialogInfo.isShowing()) dialogInfo.dismiss();
                     showDialogInfo(dialogTitle, dialogMessage);
+                }
                 else {
                     Editor editor = userNamePreferences.edit();
                     if (userNamePreferences.contains(keyPreferencesUserName)) {

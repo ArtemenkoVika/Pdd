@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.admin.pdd.R;
-import com.example.admin.pdd.patterns.Singleton;
+import com.example.admin.pdd.pattern.Singleton;
 
 import java.io.ByteArrayOutputStream;
 
@@ -35,7 +35,7 @@ public class BaseActivity extends FragmentActivity {
         }
     }
 
-    public void savedInRotation(Bundle savedInstanceState, String parameter, View view) {
+    public void setViewVisibility(Bundle savedInstanceState, String parameter, View view) {
         switch (savedInstanceState.getInt(parameter)) {
 
             case View.VISIBLE:

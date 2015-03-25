@@ -2,4 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.admin.pdd.activity.TestsOfPDDActivity" >
 
+    <item
+        android:id="@+id/results"
+        android:showAsAction="always"
+        android:title="@string/results_menu" />
+
+    <item
+        android:id="@+id/back_to_main"
+        android:showAsAction="always"
+        android:title="@string/back_to_main" />
 </menu>
